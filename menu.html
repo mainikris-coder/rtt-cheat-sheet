@@ -112,16 +112,16 @@
             <h1 class="brand">Orks Cheat Sheet</h1>
             <p class="nav-label">Sections</p>
             <nav aria-label="Sections">
-                <a class="nav-link" href="index.html" target="content-frame" aria-current="page">Current content</a>
+                <a class="nav-link" href="index.html" target="content-frame" aria-current="page">Cheat Sheet</a>
             </nav>
         </aside>
         <button class="backdrop" type="button" aria-label="Close menu"></button>
         <main class="main">
             <header class="toolbar">
                 <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar" aria-label="Open side menu">☰</button>
-                <h2 id="section-title">Current content</h2>
+                <h2 id="section-title">Cheat Sheet</h2>
             </header>
-            <section class="content" aria-label="Current content section">
+            <section class="content" aria-label="Cheat Sheet section">
                 <iframe name="content-frame" src="index.html" title="Orks 11th Edition cheat sheet"></iframe>
             </section>
         </main>
@@ -133,19 +133,24 @@
 
         function closeMenu() {
             document.body.classList.remove('menu-open');
-            toggle.setAttribute('aria-expanded', 'false');
+            if (toggle) toggle.setAttribute('aria-expanded', 'false');
         }
 
-        toggle.addEventListener('click', () => {
-            const open = document.body.classList.toggle('menu-open');
-            toggle.setAttribute('aria-expanded', String(open));
-        });
-        backdrop.addEventListener('click', closeMenu);
+        if (toggle) {
+            toggle.addEventListener('click', () => {
+                const open = document.body.classList.toggle('menu-open');
+                toggle.setAttribute('aria-expanded', String(open));
+            });
+        }
+
+        if (backdrop) backdrop.addEventListener('click', closeMenu);
+
         navLinks.forEach((link) => {
             link.addEventListener('click', () => {
                 navLinks.forEach((item) => item.removeAttribute('aria-current'));
                 link.setAttribute('aria-current', 'page');
-                document.querySelector('#section-title').textContent = link.textContent.trim();
+                const title = document.querySelector('#section-title');
+                if (title) title.textContent = link.textContent.trim();
                 closeMenu();
             });
         });
