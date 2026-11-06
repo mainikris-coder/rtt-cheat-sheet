@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11th Ed Terrain &amp; Visibility</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --surface: #1e1e1e;
+            --surface-alt: #2a2a2a;
+            --primary: #4caf50;
+            --primary-dark: #2e7d32;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --accent-cp: #ff9800;
+            --accent-keyword: #64b5f6;
+            --accent-danger: #ef5350;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 16px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary-dark);
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.8rem;
+        }
+        h2 {
+            margin-top: 32px;
+            margin-bottom: 16px;
+            color: #fff;
+            border-bottom: 2px solid #333;
+            padding-bottom: 8px;
+            font-size: 1.4rem;
+        }
+        h3 {
+            margin-top: 16px;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        h3:first-child { margin-top: 0; }
+        h4 {
+            margin-top: 14px;
+            margin-bottom: 6px;
+            color: #fff;
+            font-size: 1rem;
+        }
+        p { margin-bottom: 8px; }
+        p:last-child { margin-bottom: 0; }
+        .card {
+            background: var(--surface);
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .mode-card {
+            background: var(--surface-alt);
+            border-left: 4px solid var(--accent-cp);
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+        }
+        .mode-card.danger {
+            border-left-color: var(--accent-danger);
+        }
+        .mode-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: var(--accent-cp);
+            text-transform: uppercase;
+            font-size: 1.05rem;
+        }
+        .mode-card.danger .mode-header {
+            color: var(--accent-danger);
+        }
+        .badge {
+            background: var(--accent-cp);
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            font-weight: bold;
+            text-transform: none;
+        }
+        .mode-card.danger .badge {
+            background: var(--accent-danger);
+            color: #fff;
+        }
+        .sub-note {
+            font-style: italic;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        ul, ol { margin-left: 24px; margin-bottom: 8px; }
+        ul:last-child, ol:last-child { margin-bottom: 0; }
+        li { margin-bottom: 6px; }
+        strong { color: #fff; }
+        .kw { color: var(--accent-keyword); font-weight: bold; }
+        .rule-ref { color: var(--text-muted); font-size: 0.85em; font-weight: normal; }
+        .table-wrap { overflow-x: auto; margin-bottom: 16px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface);
+            border-radius: 4px;
+            overflow: hidden;
+            font-size: 0.92rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid #333;
+        }
+        th {
+            background: var(--surface-alt);
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+        tr:last-child td { border-bottom: none; }
+        .example-figure {
+            margin-top: 14px;
+            background: var(--surface-alt);
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 12px;
+        }
+        .example-figure img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto 12px;
+            border-radius: 4px;
+            background: #fff;
+        }
+        .example-caption {
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+        .example-caption h4 {
+            color: var(--accent-cp);
+            margin-top: 0;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Terrain &amp; Visibility (11th Edition)</h1>
+
+        <h2>Quick Reference: Terrain Categories &amp; Visibility Rules</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category / Rule</th>
+                        <th>Applies To / Trigger</th>
+                        <th>Movement &amp; Visibility Effects</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Exposed Terrain</strong> <span class="rule-ref">(13.03)</span></td>
+                        <td>Craters, razorwire, scattered debris</td>
+                        <td><strong>Unimpeded movement</strong> (horiz &amp; vert). Terrain area grants <strong>Benefit of Cover</strong> to <span class="kw">INFANTRY</span>/<span class="kw">BEASTS</span>/<span class="kw">SWARM</span> within it, but is <strong>not Obscuring</strong> and does <strong>not grant Hidden</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Light Terrain</strong> <span class="rule-ref">(13.04)</span></td>
+                        <td>Barricades, low walls, statuary</td>
+                        <td><strong>Unimpeded movement</strong> (horiz &amp; vert). Makes its terrain area <strong>Obscuring</strong> &amp; grants <strong>Hidden</strong> (15" detection) to eligible models within it.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dense Terrain</strong> <span class="rule-ref">(13.05)</span></td>
+                        <td>Buildings, ruins, containers, woods</td>
+                        <td><strong>Restricts movement</strong> (&gt;2" height blocks non-<span class="kw">INFANTRY</span>/<span class="kw">BEASTS</span>/<span class="kw">SWARM</span>/<span class="kw">MOBILE</span>). Makes terrain area <strong>Obscuring</strong>, grants <strong>Hidden</strong> &amp; <strong>Gone to Ground</strong> (12" detection), and has <strong>Solid</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Benefit of Cover</strong> <span class="rule-ref">(13.08)</span></td>
+                        <td>Every model in target unit is <span class="kw">INFANTRY</span>/<span class="kw">BEASTS</span>/<span class="kw">SWARM</span> within a terrain area <strong>OR</strong> not fully visible due to terrain</td>
+                        <td><strong>Worsen BS by 1</strong> on ranged attacks targeting the unit <span class="rule-ref">(ignored by <strong>[IGNORES COVER]</strong>)</span>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hidden</strong> <span class="rule-ref">(13.09)</span></td>
+                        <td><span class="kw">INFANTRY</span>/<span class="kw">BEASTS</span>/<span class="kw">SWARM</span> within Light/Dense terrain area &amp; unit made no ranged attacks this or previous turn</td>
+                        <td>Model is <strong>only visible</strong> to enemies within its <strong>15" detection range</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gone to Ground</strong> <span class="rule-ref">(13.09)</span></td>
+                        <td>Model is <strong>Hidden</strong>, not fully visible due to intervening <strong>Dense</strong> feature, &amp; no ranged attacks this/previous turn</td>
+                        <td><strong>Subtract 3"</strong> from detection range <span class="rule-ref">(reduces default 15" detection range to <strong>12"</strong>)</span>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Obscuring</strong> <span class="rule-ref">(13.10)</span></td>
+                        <td>Every LoS between two models crosses a Light/Dense terrain area neither model is within</td>
+                        <td>The two models are <strong>not visible to each other</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Solid</strong> <span class="rule-ref">(13.11)</span></td>
+                        <td>All <strong>Dense</strong> terrain features (enclosed gaps &le;3" from ground level)</td>
+                        <td><strong>Blocks LoS</strong> across enclosed gaps (doors, windows, bullet holes) &le;3" from ground level; models cannot end a move protruding through them.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Plunging Fire</strong> <span class="rule-ref">(22.05)</span></td>
+                        <td>Attacker &ge;3" high on terrain (or <span class="kw">TOWERING</span> within 12") vs visible unit with &ge;1 model on ground level</td>
+                        <td><strong>Improve BS by 1</strong> on ranged attacks <span class="rule-ref">(no effect on/against <span class="kw">AIRCRAFT</span>)</span>.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Visibility &amp; Line of Sight</h2>
+
+        <div class="card">
+            <h3>Core Visibility Rules <span class="rule-ref">(06.01)</span></h3>
+            <ul>
+                <li><strong>Line of Sight (LoS):</strong> An imaginary straight line, <strong>1 mm wide</strong>, drawn from any part of the observing model to any part of the observed model. Ignore other models in the observing model's unit and in the observed model's unit.</li>
+                <li><strong>Model Visible:</strong> Any part of the observed model is visible to the observing model (unblocked by intervening terrain or models from other units).</li>
+                <li><strong>Model Fully Visible:</strong> Every part of the observed model that is <strong>facing the observing model</strong> is visible to it (i.e. the only thing blocking visibility to any part of that model is the model itself).</li>
+                <li><strong>Unit Visible:</strong> One or more models in the unit are visible to the observing model.</li>
+                <li><strong>Unit Fully Visible:</strong> <strong>Every model</strong> in the unit is <strong>fully visible</strong> to the observing model (the observing model can see through other models in the observed unit).</li>
+            </ul>
+        </div>
+
+        <h2>Terrain Areas, Categories &amp; Movement</h2>
+
+        <div class="card">
+            <h3>Terrain Areas &amp; Categories <span class="rule-ref">(13.01 – 13.05)</span></h3>
+            <p>Terrain features are placed on a defined boundary (base/mat), individually on the battlefield, or in a group that defines an area boundary. The area inside that boundary (or covered by a standalone feature) is a <strong>Terrain Area</strong>.</p>
+            <ul>
+                <li><strong>Exposed Terrain <span class="rule-ref">(13.03)</span>:</strong> <em>Craters, razorwire, scattered debris.</em> Traversed without hindrance; does not make its terrain area Obscuring or grant Hidden.</li>
+                <li><strong>Light Terrain <span class="rule-ref">(13.04)</span>:</strong> <em>Barricades, low walls, statuary.</em> Traversed without hindrance; makes its terrain area <strong>Obscuring</strong> and allows eligible models within it to be <strong>Hidden</strong>.</li>
+                <li><strong>Dense Terrain <span class="rule-ref">(13.05)</span>:</strong> <em>Buildings, ruins, armoured containers, woods.</em> Restricts movement; makes its terrain area <strong>Obscuring</strong>, allows eligible models within it to be <strong>Hidden</strong> and <strong>Gone to Ground</strong>, and has the <strong>Solid</strong> rule.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Terrain &amp; Movement <span class="rule-ref">(13.06)</span></h3>
+            <ul>
+                <li><strong>Exposed &amp; Light Features:</strong> All models can move horizontally and vertically through Exposed and Light terrain features freely.</li>
+                <li>
+                    <strong>Dense Features:</strong>
+                    <ul>
+                        <li><span class="kw">INFANTRY</span> / <span class="kw">BEASTS</span> / <span class="kw">SWARM</span> / <span class="kw">MOBILE</span> models can move <strong>horizontally</strong> through Dense terrain features (e.g. through ruin walls).</li>
+                        <li><span class="kw">INFANTRY</span> / <span class="kw">BEASTS</span> / <span class="kw">SWARM</span> models can also move <strong>vertically</strong> through Dense terrain features (e.g. through floors and ceilings).</li>
+                        <li><strong>All Other Models:</strong> Can move horizontally through Dense terrain features <strong>only if</strong> all sections of the feature the model's base moves through are <strong>2" or less in height</strong>. For sections taller than 2", they must climb vertically to ascend/descend, cannot move through ceilings/floors, and cannot end on upper levels.</li>
+                    </ul>
+                </li>
+                <li><strong>Climbing Vertically (&gt;2" Height):</strong> A model can climb up or down any terrain feature taller than 2" by counting the vertical distance up and/or down as part of its move. It must be within <strong>&frac12;" horizontally</strong> of the terrain feature when it starts and finishes climbing.</li>
+                <li><strong>Ending Above Ground Level:</strong> Only <span class="kw">INFANTRY</span> / <span class="kw">BEASTS</span> / <span class="kw">SWARM</span> / <span class="kw">FLY</span> / <span class="kw">MONSTER</span> models can be set up or end a move on a surface above ground level, and only if the model is <strong>stable</strong> and <strong>no part of its base overhangs</strong> the outer edge of that surface.</li>
+                <li><strong>Solid Protrusion Restriction <span class="rule-ref">(13.06 &amp; 13.11)</span>:</strong> On a terrain feature with the <strong>Solid</strong> rule (all Dense features), a model <strong>cannot end a move</strong> with any part of it protruding through an enclosed part of that feature <strong>3" or less from ground level</strong> (not even through doors or windows).</li>
+            </ul>
+        </div>
+
+        <h2>Terrain &amp; Visibility Rules</h2>
+
+        <div class="card">
+            <h3>Benefit of Cover <span class="rule-ref">(13.08)</span></h3>
+            <div class="mode-card">
+                <div class="mode-header">
+                    <span>Benefit of Cover</span>
+                    <span class="badge">Ranged Attack: Worsen BS by 1</span>
+                </div>
+                <span class="sub-note">Checked per attacking model against the target unit as a whole. Does not apply to melee attacks or weapons with [IGNORES COVER] (24.18).</span>
+                <p>Each time a ranged attack targets a unit, if <strong>every model</strong> in that target unit meets <strong>one or more</strong> of the following conditions, that unit has the <strong>Benefit of Cover</strong> against that attack:</p>
+                <ol>
+                    <li>That model has the <span class="kw">INFANTRY</span> / <span class="kw">BEASTS</span> / <span class="kw">SWARM</span> keyword and is <strong>within</strong> a terrain area <span class="rule-ref">(note: within, not wholly within; any terrain area qualifies)</span>.</li>
+                    <li>That model is <strong>not fully visible</strong> to the attacking model due to one or more intervening terrain features and/or one or more intervening <strong>obscuring terrain areas (13.10)</strong>.</li>
+                </ol>
+                <p><strong>Effect:</strong> Each time a ranged attack targets a unit that has the Benefit of Cover against it, <strong>worsen the BS characteristic of that attack by 1</strong> (e.g. BS 3+ becomes BS 4+).</p>
+            </div>
+
+            <div class="example-figure">
+                <img src="https://wahapedia.ru/wh40k11ed/img/BenefitOfCover.png" alt="Benefit of Cover Diagram" loading="lazy">
+                <div class="example-caption">
+                    <h4>Example: Benefit of Cover (When Unit E Makes Ranged Attacks)</h4>
+                    <ul>
+                        <li><strong>Unit A:</strong> Fully visible to every model in Unit E &rarr; <strong>Does NOT have Cover</strong>.</li>
+                        <li><strong>Unit B:</strong> Not all models in Unit B are within a terrain area (and they are fully visible) &rarr; <strong>Does NOT have Cover</strong>.</li>
+                        <li><strong>Unit C:</strong> All models in Unit C (<span class="kw">INFANTRY</span>) are within a terrain area &rarr; <strong>Has Benefit of Cover (-1 BS)</strong>.</li>
+                        <li><strong>Unit D:</strong> Not fully visible to Unit E due to an intervening obscuring terrain area &rarr; <strong>Has Benefit of Cover (-1 BS)</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Hidden &amp; Gone to Ground <span class="rule-ref">(13.09)</span></h3>
+
+            <div class="mode-card">
+                <div class="mode-header">
+                    <span>Hidden</span>
+                    <span class="badge">Detection Range: 15"</span>
+                </div>
+                <p>A model is <strong>Hidden</strong> while <strong>all</strong> of the following apply to it:</p>
+                <ol>
+                    <li>That model has the <span class="kw">INFANTRY</span> / <span class="kw">BEASTS</span> / <span class="kw">SWARM</span> keyword and is <strong>within</strong> a terrain area that contains one or more <strong>Light</strong> or <strong>Dense</strong> terrain features.</li>
+                    <li>That model's unit <strong>did not make one or more ranged attacks</strong> during <strong>this turn</strong> or during the <strong>previous turn</strong> <span class="rule-ref">(in Turn 1, units count as not having made ranged attacks during the previous turn)</span>.</li>
+                </ol>
+                <p><strong>Effect:</strong> While a model is <strong>Hidden</strong>, it can <strong>only be visible</strong> to enemy models that are within its <strong>detection range</strong> (default <strong>15"</strong>).</p>
+            </div>
+
+            <div class="mode-card danger">
+                <div class="mode-header">
+                    <span>Gone to Ground</span>
+                    <span class="badge">-3" Detection Range (12")</span>
+                </div>
+                <p>A model has <strong>Gone to Ground</strong> while <strong>all</strong> of the following apply:</p>
+                <ol>
+                    <li>That model is <strong>Hidden</strong>.</li>
+                    <li>That model is <strong>not fully visible</strong> to the attacking model due to one or more intervening <strong>Dense</strong> terrain features.</li>
+                    <li>That model's unit <strong>did not make one or more ranged attacks</strong> during <strong>this turn</strong> or during the <strong>previous turn</strong> <span class="rule-ref">(units that shot this or last turn cannot go to ground, even if an ability lets them shoot and remain Hidden)</span>.</li>
+                </ol>
+                <p><strong>Effect:</strong> While a model has <strong>Gone to Ground</strong>, <strong>subtract 3"</strong> from that model's detection range (reducing the default 15" detection range to <strong>12"</strong>).</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Obscuring <span class="rule-ref">(13.10)</span></h3>
+            <ul>
+                <li><strong>Obscuring Terrain Areas:</strong> Any terrain area that contains one or more <strong>Light</strong> or <strong>Dense</strong> terrain features is an <strong>obscuring terrain area</strong>.</li>
+                <li><strong>Blocking Visibility:</strong> If <strong>every</strong> line of sight drawn between two models crosses one or more obscuring terrain areas (<strong>excluding</strong> obscuring terrain areas that one or both of those models are <strong>within</strong>), those two models are <strong>not visible to each other</strong>.</li>
+            </ul>
+
+            <div class="example-figure">
+                <img src="https://wahapedia.ru/wh40k11ed/img/HiddenAndObscuring.png" alt="Hidden and Obscuring Diagram" loading="lazy">
+                <div class="example-caption">
+                    <h4>Example: Hidden &amp; Obscuring</h4>
+                    <ul>
+                        <li><strong>Units A &amp; D:</strong> There is an obscuring terrain area between all models in Units A and D (and neither is within it), so <strong>none of them are visible to each other</strong>.</li>
+                        <li><strong>Units B &amp; C (Hidden):</strong> All models in Units B and C are <span class="kw">INFANTRY</span> within the Light/Dense terrain area, so they are <strong>Hidden</strong> (15" detection range).</li>
+                        <li><strong>Unit D Looking at B &amp; C:</strong> Unit D's models are within the <strong>15" detection range</strong> of Unit B's models (but <em>not</em> Unit C's), so <strong>Unit B's models are visible to Unit D</strong>, while <strong>Unit C's models are NOT visible to Unit D</strong>.</li>
+                        <li><strong>Units B &amp; C Looking at D:</strong> Unit D's models are <strong>visible to both Units B and C</strong>, since Unit D is not within a terrain area (not Hidden) and the terrain area B and C are within is excluded from blocking LoS for Obscuring.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Solid &amp; Plunging Fire <span class="rule-ref">(13.11 &amp; 22.05)</span></h3>
+            <ul>
+                <li>
+                    <strong>Solid <span class="rule-ref">(13.11)</span>:</strong>
+                    <ul>
+                        <li>All <strong>Dense</strong> terrain features have the <strong>Solid</strong> rule.</li>
+                        <li>Line of sight <strong>cannot be drawn across any enclosed gap</strong> in the surface of a Solid terrain feature that is <strong>3" or less from ground level</strong> (e.g. ground-floor doors, windows, bullet holes, or narrow gaps between adjacent features; some missions may adjust this height).</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Plunging Fire <span class="rule-ref">(22.05)</span>:</strong>
+                    <ul>
+                        <li>Each time a model makes a ranged attack targeting a visible unit containing <strong>one or more models on ground level</strong>, <strong>improve the BS characteristic of that attack by 1</strong> if one or more of the following apply:
+                            <ol>
+                                <li>The attacking model is on a section of a terrain feature that is <strong>3" or more in height</strong>.</li>
+                                <li>The attacking model has the <span class="kw">TOWERING</span> keyword and the target unit is <strong>within 12"</strong>.</li>
+                            </ol>
+                        </li>
+                        <li><span class="sub-note">Note (23.03): Plunging Fire has no effect on attacks made by, or targeting, <span class="kw">AIRCRAFT</span> units.</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>
