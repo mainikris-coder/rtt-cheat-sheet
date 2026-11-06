@@ -33,6 +33,7 @@ def main() -> None:
 
         sections[href] = section_path.read_text(encoding="utf-8")
         attrs = re.sub(r'\s+href\s*=\s*(["\']).*?\1', "", attrs, flags=re.IGNORECASE | re.DOTALL)
+        attrs = re.sub(r'\s+target\s*=\s*(["\']).*?\1', "", attrs, flags=re.IGNORECASE | re.DOTALL)
         attrs += f' href="#{escape(href, quote=True)}" data-section-file="{escape(href, quote=True)}"'
         return f'<a{attrs}>{match.group("label")}</a>'
 
@@ -63,7 +64,8 @@ def main() -> None:
         const sectionDocuments = {documents_json};
         const sectionFrame = document.querySelector('iframe[name="content-frame"]');
         document.querySelectorAll('.nav-link[data-section-file]').forEach((link) => {{
-            link.addEventListener('click', () => {{
+            link.addEventListener('click', (event) => {{
+                event.preventDefault();
                 const documentHtml = sectionDocuments[link.dataset.sectionFile];
                 if (sectionFrame && documentHtml) sectionFrame.srcdoc = documentHtml;
             }});
@@ -72,7 +74,7 @@ def main() -> None:
     """
     if "</body>" not in menu.lower():
         raise RuntimeError("menu.html is missing its closing body tag")
-    menu = re.sub(r"</body>", section_script + "\n</body>", menu, count=1, flags=re.IGNORECASE)
+    menu = re.sub(r"</body>", lambda match: f"{section_script}\n{match.group(0)}", menu, count=1, flags=re.IGNORECASE)
 
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_FILE.write_text(menu, encoding="utf-8")
