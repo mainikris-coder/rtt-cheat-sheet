@@ -3,24 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transport Rules</title>
+    <title>11th Ed Transport Rules</title>
     <style>
-        :root { color-scheme: dark; --bg: #121212; --surface: #1e1e1e; --primary: #4caf50; --text: #e0e0e0; --muted: #a0a0a0; }
-        * { box-sizing: border-box; }
-        body { margin: 0; padding: 16px; background: var(--bg); color: var(--text); font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        main { max-width: 800px; margin: 0 auto; }
-        h1 { color: var(--primary); text-align: center; text-transform: uppercase; border-bottom: 3px solid #2e7d32; padding-bottom: 12px; }
-        .card { padding: 16px; margin-top: 24px; background: var(--surface); border-left: 4px solid var(--primary); border-radius: 4px; }
-        .muted { color: var(--muted); }
+        :root {
+            --bg-color: #121212;
+            --surface: #1e1e1e;
+            --surface-alt: #2a2a2a;
+            --primary: #4caf50;
+            --primary-dark: #2e7d32;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --accent-cp: #ff9800;
+            --accent-keyword: #64b5f6;
+            --accent-danger: #ef5350;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 16px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary-dark);
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.8rem;
+        }
+        h2 {
+            margin-top: 32px;
+            margin-bottom: 16px;
+            color: #fff;
+            border-bottom: 2px solid #333;
+            padding-bottom: 8px;
+            font-size: 1.4rem;
+        }
+        h3 {
+            margin-top: 16px;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        h3:first-child { margin-top: 0; }
+        h4 {
+            margin-top: 14px;
+            margin-bottom: 6px;
+            color: #fff;
+            font-size: 1rem;
+        }
+        p { margin-bottom: 8px; }
+        p:last-child { margin-bottom: 0; }
+        .card {
+            background: var(--surface);
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .mode-card {
+            background: var(--surface-alt);
+            border-left: 4px solid var(--accent-cp);
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+        }
+        .mode-card.danger {
+            border-left-color: var(--accent-danger);
+        }
+        .mode-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: var(--accent-cp);
+            text-transform: uppercase;
+            font-size: 1.05rem;
+        }
+        .mode-card.danger .mode-header {
+            color: var(--accent-danger);
+        }
+        .badge {
+            background: var(--accent-cp);
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            font-weight: bold;
+            text-transform: none;
+        }
+        .mode-card.danger .badge {
+            background: var(--accent-danger);
+            color: #fff;
+        }
+        .sub-note {
+            font-style: italic;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        ul, ol { margin-left: 24px; margin-bottom: 8px; }
+        ul:last-child, ol:last-child { margin-bottom: 0; }
+        li { margin-bottom: 6px; }
+        strong { color: #fff; }
+        .kw { color: var(--accent-keyword); font-weight: bold; }
+        .rule-ref { color: var(--text-muted); font-size: 0.85em; font-weight: normal; }
+        .table-wrap { overflow-x: auto; margin-bottom: 16px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface);
+            border-radius: 4px;
+            overflow: hidden;
+            font-size: 0.92rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid #333;
+        }
+        th {
+            background: var(--surface-alt);
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+        tr:last-child td { border-bottom: none; }
     </style>
 </head>
 <body>
-    <main>
-        <h1>Transport Rules</h1>
-        <section class="card" aria-labelledby="transport-placeholder">
-            <h2 id="transport-placeholder">Transport rules</h2>
-            <p class="muted">This section is ready for transport rules to be added.</p>
-        </section>
-    </main>
+    <div class="container">
+        <h1>Transports (11th Edition)</h1>
+
+        <h2>Quick Reference: Disembark Comparison</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Move / Mode</th>
+                        <th>When Used</th>
+                        <th>Set-Up</th>
+                        <th>After Moving / Effects</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Rapid Disembark</strong> <span class="rule-ref">(18.04)</span></td>
+                        <td><span class="kw">TRANSPORT</span> made a <strong>Normal</strong> or <strong>Ingress</strong> move this phase</td>
+                        <td>Wholly within <strong>3"</strong><br><span class="rule-ref">(Unengaged)</span></td>
+                        <td><strong>Cannot Charge</strong> this turn. <span class="rule-ref">(If Ingress: must obey same Ingress restrictions).</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tactical Disembark</strong> <span class="rule-ref">(18.04)</span></td>
+                        <td><span class="kw">TRANSPORT</span> <strong>Remained Stationary</strong> or <strong>has not moved yet</strong> this phase (and fits in 3")</td>
+                        <td>Wholly within <strong>3"</strong><br><span class="rule-ref">(Unengaged)</span></td>
+                        <td>Immediately make a <strong>Normal Move</strong> (can Charge) or <strong>Advance Move</strong> (no Charge).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Combat Disembark</strong> <span class="rule-ref">(18.04)</span></td>
+                        <td>Neither Rapid nor Tactical is possible (e.g. cannot fit unengaged in 3")</td>
+                        <td>Wholly within <strong>6"</strong><br><span class="rule-ref">(Can engage same enemies as Transport)</span></td>
+                        <td><strong>Hazard Roll</strong> per model (1–2 = 1 MW). Unit is <strong>Battle-shocked</strong> &amp; <strong>cannot Charge</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Emergency Disembark</strong> <span class="rule-ref">(18.05)</span></td>
+                        <td><span class="kw">TRANSPORT</span> is <strong>destroyed</strong> (before removing wreck &amp; before Deadly Demise)</td>
+                        <td>Wholly within <strong>6"</strong> &amp; <strong>as close as possible</strong><br><span class="rule-ref">(Unengaged; or Engaged if impossible)</span></td>
+                        <td><strong>Hazard Roll</strong> per model (1–2 = 1 MW). Models that can't fit are <strong>destroyed</strong>. <strong>Battle-shocked</strong> &amp; <strong>cannot Charge</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Assault Disembark</strong> <span class="rule-ref">(18.06)</span></td>
+                        <td>Granted by specific rule (Transport hasn't Advanced/Fallen Back)</td>
+                        <td>Wholly within <strong>3"</strong><br><span class="rule-ref">(Unengaged)</span></td>
+                        <td><strong>Can declare a Charge</strong> even if <span class="kw">TRANSPORT</span> made a Normal Move.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Shock Disembark</strong> <span class="rule-ref">(18.07)</span></td>
+                        <td>Granted by specific rule (even if Transport Advanced, if rule allows)</td>
+                        <td>Wholly within <strong>3"</strong><br><span class="rule-ref">(Unengaged)</span></td>
+                        <td><strong>Cannot Charge</strong> this turn.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Capacity &amp; Embarked Status</h2>
+
+        <div class="card">
+            <h3>Transport Capacity <span class="rule-ref">(18.01)</span></h3>
+            <ul>
+                <li><strong>Datasheet Limit:</strong> Lists eligible model types/keywords and maximum model count. Multiple units can be embarked simultaneously if sufficient capacity remains for each whole unit.</li>
+                <li><strong>Starting Embarked:</strong> During the <strong>Declare Battle Formations</strong> step, friendly units can start embarked within any friendly <span class="kw">TRANSPORT</span> with sufficient remaining capacity.</li>
+                <li><strong>Dedicated Transports:</strong> Every friendly <span class="kw">DEDICATED TRANSPORT</span> <strong>must</strong> start the battle with at least one unit embarked within it. At the end of Declare Battle Formations, any empty <span class="kw">DEDICATED TRANSPORT</span> is <strong>destroyed</strong> (does not trigger on-destroyed rules).</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>While Embarked: Not on the Battlefield <span class="rule-ref">(01.02.04)</span></h3>
+            <ul>
+                <li><strong>No Visibility or Range:</strong> Embarked units are not visible to other units (only to themselves), cannot see other units, and distances cannot be measured to/from them (except for their own abilities).</li>
+                <li><strong>Targeting &amp; Abilities:</strong> Cannot be targeted by attacks or rules requiring visibility, distance, or being on the battlefield. They still count as units in your army and can use/be affected by rules that do not require visibility, distance, or being on the battlefield (abilities only affect the <span class="kw">TRANSPORT</span> itself if they explicitly state they work while embarked).</li>
+                <li><strong>Command Phase Battle-shock:</strong> Must still make Battle-shock rolls in your Command phase if already Battle-shocked or at/below Half-Strength.</li>
+                <li><strong>Persisting Effects <span class="rule-ref">(01.02.02)</span>:</strong> Any persisting effects on a unit when it embarks are noted and continue to apply for their full duration if the unit is set up on the battlefield again.</li>
+                <li><strong>Reviving Models <span class="rule-ref">(01.02.03)</span>:</strong> Models returned/added to an embarked unit are placed embarked if capacity remains; otherwise, those models are destroyed (without triggering on-destroyed rules).</li>
+            </ul>
+        </div>
+
+        <h2>Embarking</h2>
+
+        <div class="card">
+            <h3>Embarking <span class="rule-ref">(18.02 &amp; 18.02.01)</span></h3>
+            <p>Once the first battle round has started, a friendly unit can embark within a friendly <span class="kw">TRANSPORT</span> model immediately after making a <strong>Normal</strong>, <strong>Advance</strong>, or <strong>Fall-Back</strong> move, if <strong>all</strong> of the following conditions apply:</p>
+            <ol>
+                <li><strong>Within 3":</strong> Every model in the unit ends that move <strong>within 3"</strong> of that <span class="kw">TRANSPORT</span> <span class="rule-ref">(note: within 3", not wholly within)</span>.</li>
+                <li><strong>Not Set Up This Turn:</strong> The unit was <strong>not set up on the battlefield this turn</strong> <span class="rule-ref">(prevents disembarking and re-embarking in the same turn, or arriving from Reserves/Ingress and embarking in the same turn, unless a rule explicitly overrides this condition)</span>.</li>
+                <li><strong>Eligible Unit:</strong> The unit is eligible to embark per that <span class="kw">TRANSPORT</span>'s datasheet.</li>
+                <li><strong>Sufficient Capacity:</strong> The <span class="kw">TRANSPORT</span> has enough remaining capacity for <strong>every model</strong> in the unit.</li>
+            </ol>
+            <p><strong>Effect:</strong> Remove the unit from the battlefield and place it to one side (it is now embarked and not on the battlefield).</p>
+            <p><strong>Able to Embark <span class="rule-ref">(18.02.01)</span>:</strong> A unit is considered <em>able to embark</em> if it satisfies all four conditions above (plus any modifications to those conditions from other rules).</p>
+        </div>
+
+        <h2>Disembarking</h2>
+
+        <div class="card">
+            <h3>Disembarking Overview &amp; Eligibility <span class="rule-ref">(18.03 &amp; 18.04)</span></h3>
+            <p>In the active player's <strong>Movement phase</strong> (Move Units step), each friendly embarked unit can be selected to move and make a <strong>Disembark Move (18.04)</strong>.</p>
+            <h4>When Eligible for a Disembark Move <span class="rule-ref">(18.04)</span>:</h4>
+            <ul>
+                <li>Embarked within a <span class="kw">TRANSPORT</span> model that is <strong>on the battlefield</strong>.</li>
+                <li><strong>Did not embark</strong> within that <span class="kw">TRANSPORT</span> <strong>this phase</strong>.</li>
+                <li>That <span class="kw">TRANSPORT</span> has <strong>not</strong> made an <strong>Advance</strong> or <strong>Fall-Back</strong> move <strong>this phase</strong>.</li>
+            </ul>
+            <h4>General Set-Up Rules <span class="rule-ref">(03.02)</span>:</h4>
+            <ul>
+                <li><strong>Coherency &amp; Unengaged:</strong> Models must be set up <strong>wholly within</strong> the mode's set-up distance of the <span class="kw">TRANSPORT</span>, in <strong>Coherency</strong> (within 2" horiz / 5" vert of &ge;1 model in the unit, and within 9" horiz / 5" vert of all models in the unit), and <strong>Unengaged</strong> (&gt;2" horiz / &gt;5" vert from enemy models, except in <em>Combat Disembark</em>).</li>
+                <li><strong>If You Cannot Set Up <span class="rule-ref">(03.02.01)</span>:</strong> If all models cannot be legally set up during a voluntary Disembark Move, return the unit to the <span class="kw">TRANSPORT</span>; it counts as <strong>not having been selected to move</strong> yet.</li>
+                <li><strong>Large Models <span class="rule-ref">(03.02.02)</span>:</strong> If a disembarking model's base is too large to physically fit wholly within 3", set it up with its base <strong>within 1"</strong> of the <span class="kw">TRANSPORT</span>'s base/hull and <strong>unengaged</strong>.</li>
+            </ul>
+        </div>
+
+        <h3>Disembark Modes <span class="rule-ref">(18.04 &amp; 09.02.02)</span></h3>
+        <p class="sub-note">Before moving, you must select a disembark mode. Modes are mutually exclusive and <strong>must be assessed in the exact order below</strong> (you cannot choose a later mode if an earlier mode's conditions are met).</p>
+
+        <div class="mode-card">
+            <div class="mode-header">
+                <span>1. Rapid Disembark</span>
+                <span class="badge">Set-Up: Wholly within 3"</span>
+            </div>
+            <span class="sub-note">Mandatory if the TRANSPORT made a Normal Move or Ingress Move this phase.</span>
+            <ul>
+                <li><strong>While Moving:</strong> Set up each model <strong>wholly within 3"</strong> of the <span class="kw">TRANSPORT</span> and <strong>unengaged</strong> (in coherency).</li>
+                <li><strong>Ingress Limitation <span class="rule-ref">(18.04.01)</span>:</strong> If the <span class="kw">TRANSPORT</span> made an <strong>Ingress Move</strong> this turn, disembarking models must obey all placement rules and restrictions that the <span class="kw">TRANSPORT</span> had to follow during that Ingress Move (e.g. &gt;8" from enemy units, outside opponent's deployment zone).</li>
+                <li><strong>After Moving:</strong> Until the end of the turn, your unit <strong>cannot declare a charge</strong> (and cannot move again this phase).</li>
+            </ul>
+        </div>
+
+        <div class="mode-card">
+            <div class="mode-header">
+                <span>2. Tactical Disembark</span>
+                <span class="badge">Set-Up: Wholly within 3"</span>
+            </div>
+            <span class="sub-note">Mandatory if the TRANSPORT remained stationary or has not yet been selected to move this phase, AND the unit can be set up wholly within 3".</span>
+            <ul>
+                <li><strong>While Moving:</strong> Set up each model <strong>wholly within 3"</strong> of the <span class="kw">TRANSPORT</span> and <strong>unengaged</strong> (in coherency).</li>
+                <li><strong>After Moving:</strong> Immediately select your unit to make a <strong>Normal Move</strong> or an <strong>Advance Move</strong> <span class="rule-ref">(if it makes a Normal Move, it can declare a charge later this turn)</span>.</li>
+            </ul>
+        </div>
+
+        <div class="mode-card danger">
+            <div class="mode-header">
+                <span>3. Combat Disembark</span>
+                <span class="badge">Set-Up: Wholly within 6"</span>
+            </div>
+            <span class="sub-note">Mandatory fallback if neither Rapid nor Tactical Disembark applies (e.g. Transport is surrounded so the unit cannot fit unengaged within 3").</span>
+            <ul>
+                <li><strong>Before Moving (Hazard Roll):</strong> Make a <strong>Hazard Roll <span class="rule-ref">(06.03)</span></strong> for each model in the unit: roll 1D6 per model; for each roll of <strong>1–2</strong>, the unit suffers <strong>1 Mortal Wound</strong> <span class="rule-ref">(or 3 MW if all models in the unit are MONSTER/VEHICLE)</span>.</li>
+                <li><strong>While Moving:</strong> Set up each model <strong>wholly within 6"</strong> of the <span class="kw">TRANSPORT</span> (in coherency). Each model <strong>can be set up engaged</strong> with one or more enemy units that the <span class="kw">TRANSPORT</span> is engaged with <span class="rule-ref">(cannot engage enemy units the Transport is not engaged with)</span>.</li>
+                <li><strong>After Moving:</strong> Your unit becomes <strong>Battle-shocked</strong> and, until the end of the turn, <strong>cannot declare a charge</strong>.</li>
+            </ul>
+        </div>
+
+        <h2>Destroyed Transports</h2>
+
+        <div class="mode-card danger">
+            <div class="mode-header">
+                <span>Emergency Disembark Move <span class="rule-ref">(18.05)</span></span>
+                <span class="badge">Set-Up: Wholly within 6"</span>
+            </div>
+            <span class="sub-note">Mandatory when a TRANSPORT is destroyed. Resolved by the active player BEFORE removing the TRANSPORT model and BEFORE rolling Deadly Demise (24.08).</span>
+            <ul>
+                <li><strong>Before Moving (Hazard Roll):</strong> Make a <strong>Hazard Roll <span class="rule-ref">(06.03)</span></strong> for each model in the unit (roll 1D6 per model: each <strong>1–2</strong> inflicts <strong>1 Mortal Wound</strong>, or 3 MW if <span class="kw">MONSTER</span>/<span class="kw">VEHICLE</span>).</li>
+                <li><strong>While Moving (Strict Placement Priority):</strong> Set up each model in coherency:
+                    <ol>
+                        <li><strong>Unengaged First:</strong> Wholly within <strong>6"</strong> of the <span class="kw">TRANSPORT</span>, <strong>as close as possible</strong> (base-to-base/hull contact if possible) to the <span class="kw">TRANSPORT</span>, and <strong>unengaged</strong>.</li>
+                        <li><strong>Engaged Fallback:</strong> <em>Only if the above is not possible while remaining unengaged</em>, set up that model wholly within <strong>6"</strong> of the <span class="kw">TRANSPORT</span>, <strong>as close as possible</strong> to the <span class="kw">TRANSPORT</span>, and <strong>engaged</strong>.</li>
+                        <li><strong>Cannot Be Set Up:</strong> Any model that still cannot be legally set up is <strong>destroyed</strong>.</li>
+                    </ol>
+                </li>
+                <li><strong>After Moving:</strong> Your unit becomes <strong>Battle-shocked</strong> and, until the end of the turn, <strong>cannot declare a charge</strong>.</li>
+                <li><strong>Multiple Embarked Units:</strong> If multiple units are embarked, the <span class="kw">TRANSPORT</span>'s controlling player chooses the order in which they make their Emergency Disembark Moves.</li>
+            </ul>
+        </div>
+
+        <h2>Special Disembark Moves &amp; Core Abilities</h2>
+
+        <div class="card">
+            <h3>Special Disembark Move Types <span class="rule-ref">(18.06 &amp; 18.07)</span></h3>
+            <p>Used only when a datasheet or detachment rule explicitly instructs a unit to make one of these moves:</p>
+            <ul>
+                <li>
+                    <strong>Assault Disembark Move <span class="rule-ref">(18.06)</span>:</strong>
+                    <ul>
+                        <li><strong>When Eligible:</strong> As stated in the rule allowing it, provided the unit is embarked on the battlefield, did not embark this phase, and the <span class="kw">TRANSPORT</span> has <strong>not Advanced or Fallen Back</strong> this phase.</li>
+                        <li><strong>While/After Moving:</strong> Set up wholly within <strong>3"</strong> (unengaged, in coherency). Has <strong>no charge restriction</strong> (unit remains eligible to declare a charge even after the <span class="kw">TRANSPORT</span> made a Normal Move).</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Shock Disembark Move <span class="rule-ref">(18.07)</span>:</strong>
+                    <ul>
+                        <li><strong>When Eligible:</strong> As stated in the rule allowing it, provided the unit is embarked on the battlefield and did not embark this phase <span class="rule-ref">(does not require the Transport to not have Advanced if the granting rule allows it)</span>.</li>
+                        <li><strong>While/After Moving:</strong> Set up wholly within <strong>3"</strong> (unengaged, in coherency). Until the end of the turn, the unit <strong>cannot declare a charge</strong>.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Related Core Abilities <span class="rule-ref">(24)</span></h3>
+            <ul>
+                <li>
+                    <strong>Firing Deck X <span class="rule-ref">(24.14)</span>:</strong> In <strong>your Shooting phase</strong>, when the <span class="kw">TRANSPORT</span> is selected to shoot with &ge;1 embarked units:
+                    <ol>
+                        <li>Select up to <strong>X</strong> embarked models (excluding models whose units have already been selected to shoot this phase).</li>
+                        <li>For each selected model, select <strong>one ranged weapon</strong> (excluding <strong>[ONE SHOT]</strong> weapons).</li>
+                        <li>Until the <span class="kw">TRANSPORT</span> resolves all of its attacks, the <span class="kw">TRANSPORT</span> counts as equipped with those weapons in addition to its own.</li>
+                        <li>Until the end of the turn, units embarked within this <span class="kw">TRANSPORT</span> are <strong>not eligible to shoot</strong>.</li>
+                    </ol>
+                    <span class="sub-note">Note: Cannot be used with Fire Overwatch (out-of-phase rules). Uses the TRANSPORT's visibility, BS modifiers, and position.</span>
+                </li>
+                <li><strong>Deadly Demise X <span class="rule-ref">(24.08)</span>:</strong> When a <span class="kw">TRANSPORT</span> with Deadly Demise is destroyed, roll one D6 <strong>after</strong> all embarked units have completed their <strong>Emergency Disembark Moves</strong>. On a 6, each unit within 6" (including the newly disembarked units) suffers X Mortal Wounds.</li>
+                <li><strong>Scouts X" <span class="rule-ref">(24.31)</span>:</strong> A <span class="kw">DEDICATED TRANSPORT</span> wholly within your deployment zone can make a pre-battle Scout Move (up to X", ending &gt;8" horizontally from all enemy units) if <strong>every model embarked within it</strong> has the <strong>Scouts</strong> ability.</li>
+            </ul>
+        </div>
+
+    </div>
 </body>
 </html>
