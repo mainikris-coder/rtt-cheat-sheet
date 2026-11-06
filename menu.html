@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+    <title>Orks Cheat Sheet</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #121212;
+            --surface: #1e1e1e;
+            --surface-hover: #2a2a2a;
+            --primary: #4caf50;
+            --text: #e0e0e0;
+            --muted: #a0a0a0;
+            --sidebar-width: 260px;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        .app { min-height: 100vh; }
+        .sidebar {
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: 3;
+            width: var(--sidebar-width);
+            padding: 20px 14px;
+            overflow-y: auto;
+            background: var(--surface);
+            border-right: 1px solid #333;
+            transition: transform 180ms ease;
+        }
+        .brand {
+            margin: 0 10px 24px;
+            color: var(--primary);
+            font-size: 1.15rem;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+        .nav-label {
+            margin: 0 10px 8px;
+            color: var(--muted);
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+        .nav-link {
+            display: block;
+            padding: 11px 12px;
+            border-left: 3px solid transparent;
+            border-radius: 4px;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .nav-link:hover, .nav-link[aria-current="page"] {
+            background: var(--surface-hover);
+            border-left-color: var(--primary);
+        }
+        .main { min-height: 100vh; margin-left: var(--sidebar-width); }
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 56px;
+            padding: 8px 16px;
+            background: rgba(18, 18, 18, .96);
+            border-bottom: 1px solid #292929;
+        }
+        .menu-toggle {
+            display: none;
+            min-width: 40px;
+            min-height: 40px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background: var(--surface);
+            color: var(--text);
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
+        #section-title { margin: 0; font-size: 1rem; }
+        .content { height: calc(100vh - 56px); min-height: 480px; }
+        .content iframe { display: block; width: 100%; height: 100%; border: 0; background: var(--bg); }
+        .backdrop { display: none; }
+        @media (max-width: 700px) {
+            .sidebar { transform: translateX(-100%); }
+            body.menu-open .sidebar { transform: translateX(0); }
+            .main { margin-left: 0; }
+            .menu-toggle { display: inline-grid; place-items: center; }
+            body.menu-open .backdrop {
+                display: block;
+                position: fixed;
+                inset: 0;
+                z-index: 2;
+                background: rgba(0, 0, 0, .55);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar" id="sidebar" aria-label="Side menu">
+            <h1 class="brand">Orks Cheat Sheet</h1>
+            <p class="nav-label">Sections</p>
+            <nav aria-label="Sections">
+                <a class="nav-link" href="index.html" target="content-frame" aria-current="page">Current content</a>
+            </nav>
+        </aside>
+        <button class="backdrop" type="button" aria-label="Close menu"></button>
+        <main class="main">
+            <header class="toolbar">
+                <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar" aria-label="Open side menu">☰</button>
+                <h2 id="section-title">Current content</h2>
+            </header>
+            <section class="content" aria-label="Current content section">
+                <iframe name="content-frame" src="index.html" title="Orks 11th Edition cheat sheet"></iframe>
+            </section>
+        </main>
+    </div>
+    <script>
+        const toggle = document.querySelector('.menu-toggle');
+        const backdrop = document.querySelector('.backdrop');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function closeMenu() {
+            document.body.classList.remove('menu-open');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        toggle.addEventListener('click', () => {
+            const open = document.body.classList.toggle('menu-open');
+            toggle.setAttribute('aria-expanded', String(open));
+        });
+        backdrop.addEventListener('click', closeMenu);
+        navLinks.forEach((link) => {
+            link.addEventListener('click', () => {
+                navLinks.forEach((item) => item.removeAttribute('aria-current'));
+                link.setAttribute('aria-current', 'page');
+                document.querySelector('#section-title').textContent = link.textContent.trim();
+                closeMenu();
+            });
+        });
+    </script>
+</body>
+</html>
