@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orks 11th Ed Cheat Sheet</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --surface: #1e1e1e;
+            --surface-alt: #2a2a2a;
+            --primary: #4caf50;
+            --primary-dark: #2e7d32;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --accent-cp: #ff9800;
+            --accent-keyword: #64b5f6;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            line-height: 1.5; 
+            padding: 16px; 
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { 
+            text-align: center; 
+            color: var(--primary); 
+            border-bottom: 3px solid var(--primary-dark); 
+            padding-bottom: 12px; 
+            margin-bottom: 24px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            font-size: 1.8rem;
+        }
+        h2 { 
+            margin-top: 32px; 
+            margin-bottom: 16px;
+            color: #fff;
+            border-bottom: 2px solid #333; 
+            padding-bottom: 8px; 
+            font-size: 1.4rem;
+        }
+        h3 { 
+            margin-top: 24px; 
+            margin-bottom: 12px;
+            color: var(--primary); 
+            font-size: 1.2rem;
+        }
+        h4 {
+            margin-top: 16px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        .card { 
+            background: var(--surface); 
+            border-left: 4px solid var(--primary); 
+            padding: 16px; 
+            margin-bottom: 16px; 
+            border-radius: 4px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3); 
+        }
+        .stratagem { 
+            background: var(--surface-alt); 
+            border-left: 4px solid var(--accent-cp); 
+            padding: 12px 16px; 
+            margin-bottom: 12px; 
+            border-radius: 4px; 
+        }
+        .stratagem-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            font-weight: bold; 
+            margin-bottom: 4px; 
+            color: var(--accent-cp); 
+            text-transform: uppercase;
+            font-size: 1.05rem;
+        }
+        .cost { 
+            background: var(--accent-cp); 
+            color: #000; 
+            padding: 2px 8px; 
+            border-radius: 12px; 
+            font-size: 0.85rem; 
+            font-weight: bold;
+        }
+        .phase { 
+            font-style: italic; 
+            color: var(--text-muted); 
+            display: block; 
+            margin-bottom: 8px; 
+            font-size: 0.9rem;
+        }
+        ul { margin-left: 24px; margin-bottom: 8px; }
+        li { margin-bottom: 6px; }
+        strong { color: #fff; }
+        .kw { color: var(--accent-keyword); font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Orks 11th Edition</h1>
+        
+        <h2>Army Rules</h2>
+        
+        <div class="card">
+            <h3>Waaagh!</h3>
+            <ul>
+                <li><strong>Passive:</strong> Friendly <span class="kw">ORKS</span> units with this ability can re-roll Advance rolls.</li>
+                <li><strong>War Cry (Once per battle):</strong> At the start of the Command phase, you can activate this ability. Friendly <span class="kw">ORKS</span> units with Waaagh! become <strong>Riled up</strong> until the end of the next turn.</li>
+            </ul>
+            <h4>While Riled Up:</h4>
+            <ul>
+                <li>Unit gains a <strong>5+ Invulnerable Save (InSv)</strong>.</li>
+                <li>Ranged attacks gain <strong>[Assault]</strong>.</li>
+                <li>Advancing does not prevent the unit from being eligible to declare a charge.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Da Boss</h3>
+            <p>At the start of the battle round, if a model with this ability is your Warlord, you gain <strong>1 CP</strong>.</p>
+        </div>
+
+        <div class="card">
+            <h3>Unstable Energies</h3>
+            <p><span class="kw">ORKS PSYKER</span> units have a designated Psyker Level. In a single battle round, a Psyker can use psychic abilities whose combined levels do not exceed the unit's Psyker Level.</p>
+        </div>
+
+        <div class="card">
+            <h3>Special Move Types</h3>
+            <ul>
+                <li><strong>Pulse Jet Move:</strong> Max distance is D6 + 18". Ignores vertical distance, moves through models/terrain. After moving, the unit must be unengaged, cannot charge or start an action, and attacks targeting it suffer -1 to hit until your next turn.</li>
+                <li><strong>Assault Disembark Move:</strong> Set up within 3". Eligible only if embarked on a Transport that hasn't advanced/fallen back this phase (and unit hasn't embarked this phase).</li>
+            </ul>
+        </div>
+
+        <h2>Detachment: Green Tide</h2>
+        <div class="card">
+            <h3>Detachment Rule: Mob-handed Brutality</h3>
+            <ul>
+                <li>Friendly <span class="kw">BOYZ</span> units' melee attacks gain <strong>[Sustained Hits 1]</strong>.</li>
+                <li>If a friendly <span class="kw">ORKS INFANTRY</span> unit makes a charge move this turn, its melee attacks gain <strong>[Lethal Hits]</strong> against non-Monster/Vehicle targets.</li>
+            </ul>
+        </div>
+        
+        <h3>Green Tide Stratagems</h3>
+        <div class="stratagem">
+            <div class="stratagem-header"><span>Mob Mentality</span><span class="cost">1CP</span></div>
+            <span class="phase">Command Phase (Battle-shock step)</span>
+            <p>Target one friendly <span class="kw">ORKS INFANTRY</span> unit of 13+ models. Select one visible friendly <span class="kw">ORKS</span> unit within 12"; that unit automatically passes its battle-shock tests.</p>
+        </div>
+        <div class="stratagem">
+            <div class="stratagem-header"><span>'Ere We Go</span><span class="cost">1CP</span></div>
+            <span class="phase">Movement Phase</span>
+            <p>Target one friendly <span class="kw">BEAST SNAGGA BOYZ</span> or <span class="kw">BOYZ</span> unit selected to move. That unit gets +2 to its Advance rolls.</p>
+        </div>
+        <div class="stratagem">
+            <div class="stratagem-header"><span>Unbridled Carnage</span><span class="cost">1CP</span></div>
+            <span class="phase">Fight Phase</span>
+            <p>Target a friendly <span class="kw">BOYZ</span> unit that made a charge move this turn. The unit's melee attacks gain <strong>+1 Attack</strong>.</p>
+        </div>
+
+        <h2>Detachment: Runt Swarm</h2>
+        <div class="card">
+            <h3>Detachment Rule: Sneaky Little Gitz</h3>
+			<ul>
+            <li><span class="kw">GRETCHIN</span> units have <strong>Battleline</strong>.</li>
+			<li><span class="kw">GRETCHIN</span> units can perform actions even if they used <strong>advance</strong> or <strong>fall-back</strong> moves</li>
+			</ul>
+        </div>
+        
+        <h3>Runt Swarm Stratagems</h3>
+        <div class="stratagem">
+            <div class="stratagem-header"><span>Grot Shields</span><span class="cost">1CP</span></div>
+            <span class="phase">Opponent's Shooting Phase</span>
+            <p>When the enemy shoots at an Infantry unit within 3" of a Gretchin mob, the grots intercept. The Gretchin unit takes 1 Mortal Wound for each successful hit, and the attack sequence ends immediately.</p>
+        </div>
+        <div class="stratagem">
+            <div class="stratagem-header"><span>Scarper!</span><span class="cost">1CP</span></div>
+            <span class="phase">Opponent's Movement Phase</span>
+            <p>If an enemy unit ends its movement within 8" of a Gretchin unit, the Gretchin can make a reactive move of D6" (or a flat 6" if a Character is attached).</p>
+        </div>
+        <div class="stratagem">
+            <div class="stratagem-header"><span>Infested War Zone</span><span class="cost">2CP</span></div>
+            <span class="phase">Any Phase</span>
+            <p>When a Gretchin squad is destroyed, you can immediately respawn the exact same mob in Strategic Reserves.</p>
+        </div>
+
+        <h2>Detachment: Shoota Boyz</h2>
+        <div class="card">
+            <h3>Detachment Rule: Dakka! Dakka! Dakka!</h3>
+            <ul>
+                <li>Friendly <span class="kw">ORKS INFANTRY</span> units' ranged attacks gain <strong>[Assault]</strong>.</li>
+                <li>While the unit is <strong>Riled up</strong>, their ranged attacks receive <strong>+3" Range</strong>.</li>
+            </ul>
+        </div>
+        
+        <h3>Shoota Boyz Stratagems</h3>
+        <div class="stratagem">
+            <div class="stratagem-header"><span>Glowin' Dakka</span><span class="cost">1CP</span></div>
+            <span class="phase">Shooting Phase</span>
+            <p>Target one <span class="kw">ORKS INFANTRY</span> unit. Their ranged attacks that target a unit within 9" receive <strong>+1 AP</strong>.</p>
+        </div>
+        <div class="stratagem">
+            <div class="stratagem-header"><span>Kustom Dakka</span><span class="cost">1CP</span></div>
+            <span class="phase">Shooting Phase</span>
+            <p>Target one <span class="kw">ORKS INFANTRY</span> unit. Their ranged attacks targeting non-Monster/Vehicle units receive <strong>+1 to Wound</strong> rolls.</p>
+        </div>
+        <div class="stratagem">
+            <div class="stratagem-header"><span>Never Enough Dakka</span><span class="cost">1CP</span></div>
+            <span class="phase">Shooting Phase</span>
+            <p>Target one <span class="kw">ORKS INFANTRY</span> unit. Their ranged attacks gain <strong>[Sustained Hits 1]</strong>.</p>
+        </div>
+
+    </div>
+</body>
+</html>
